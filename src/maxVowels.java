@@ -1,29 +1,30 @@
 public class maxVowels {
     public static int maxVowels(String s, int k) {
-        int max = 0;
-        int count;
-        for(int i=0; i<=s.length() - k; i++){
-            String sub = s.substring(i,i+k);
-            count = countVowels(sub);
-            System.out.println(sub + "-" + count);
-            if(count > max)
-                max = count;
-        }
-        return max;
-    }
-    public static boolean isVowel(char x){
-        if(x=='a'||x=='e'||x=='i'||x=='o'||x=='u')
-            return true;
-        else
-            return false;
-    }
-    public static int countVowels(String substring){
+        int n = s.length();
+        int maxVowels = 0;
         int count = 0;
-        for(int i=0;i<substring.length(); i++){
-            if(isVowel(substring.charAt(i)))
-                count++;
+
+        int[] vowels = new int[128];
+        vowels['a'] = 1;
+        vowels['e'] = 1;
+        vowels['i'] = 1;
+        vowels['o'] = 1;
+        vowels['u'] = 1;
+
+        for (int i = 0; i < k; i++) {
+            count += vowels[s.charAt(i)];
         }
-        return count;
+
+        maxVowels = count;
+        for (int i = k; i < n; i++) {
+            count += vowels[s.charAt(i)] - vowels[s.charAt(i - k)];
+            maxVowels = Math.max(maxVowels, count);
+            //System.out.println(Arrays.toString(vowels));
+            if (maxVowels == k) {
+                return maxVowels;
+            }
+        }
+        return maxVowels;
     }
     public static void main(String[] args) {
         System.out.println(maxVowels("weallloveyou",7));
