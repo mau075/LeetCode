@@ -5,50 +5,31 @@ import java.util.Collections;
     1498. Number of Subsequences That Satisfy the Given Sum Condition
 */
 public class numSubseq {
-    static int counter = 0;
-    public static void printSubsequences(int[] arr, int index, ArrayList<Integer> path, int target)
-    {
+    public int numSubseq(int[] nums, int target) {
+        int res = 0, mod = 1000000007, l = 0, r = nums.length - 1;
+        List<Integer> pre = new ArrayList<>();
+        pre.add(1);
+        for (int i = 1; i <= nums.length; ++i) {
+            pre.add((pre.get(i - 1) << 1) % mod);
+        }
 
-        // Print the subsequence when reach
-        // the leaf of recursion tree
-        if (index == arr.length)
-        {
+        Arrays.sort(nums);
 
-            // Condition to avoid printing
-            // empty subsequence
-            if (path.size() > 0) {
-                int min = Collections.min(path);
-                int max = Collections.max(path);
-                System.out.println(path + " - " + min + " - " + max);
-                if(max + min <= target)
-                    counter++;
+        while (l <= r) {
+            if (nums[l] + nums[r] > target) {
+                r--;
+            } else {
+                res = (res + pre.get(r - l++)) % mod;
             }
         }
 
-        else
-        {
-
-            // Subsequence without including
-            // the element at current index
-            printSubsequences(arr, index + 1, path, target);
-
-            path.add(arr[index]);
-
-            // Subsequence including the element
-            // at current index
-            printSubsequences(arr, index + 1, path, target);
-
-            // Backtrack to remove the recently
-            // inserted element
-            path.remove(path.size() - 1);
-        }
-        return;
+        return res;
     }
 
     public static void main(String[] args) {
         int[] arr = { 3,3,6,8 };
+        int counter = 0;
         ArrayList<Integer> path = new ArrayList<>();
-        printSubsequences(arr,0,path, 10);
-        System.out.println(counter);
+        System.out.println();
     }
 }
