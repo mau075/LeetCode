@@ -1,53 +1,56 @@
-import java.util.*;
-
 /**
-    54. Spiral Matrix
-    @author Brisa Castillo
-    @version 09 April 2023 12:05 BOT
+     59. Spiral Matrix II
+     @author Brisa Castillo
+     @version 10 April 2023 09:14 BOT
  */
-public class spiralOrder {
-    public static List<Integer> spiralOrder(int[][] matrix) {
+public class generateMatrix {
+    public static int[][] generateMatrix(int n) {
+        int[][] matrix = new int[n][n];
+
         int top = 0;
         int left = 0;
-        int bottom = matrix.length - 1;
-        int right = matrix[0].length - 1;
+        int bottom = n - 1;
+        int right = n - 1;
 
         int direction = 1;
-        List<Integer> list = new LinkedList<>();
+        int counter = 1;
 
         while(top <= bottom && left <= right){
             if (direction == 1){
                 for (int i = left; i <= right ; ++i) {
-                    list.add(matrix[top][i]);
+                    matrix[top][i] = counter++;
                 }
                 ++top;
                 direction = 2;
             } else if (direction == 2) {
                 for (int i = top; i <=bottom ; ++i) {
-                    list.add(matrix[i][right]);
+                    matrix[i][right] = counter++;
                 }
                 --right;
                 direction=3;
             } else if (direction == 3) {
                 for (int i = right; i >= left ; --i) {
-                    list.add(matrix[bottom][i]);
+                    matrix[bottom][i] = counter++;
                 }
                 --bottom;
                 direction = 4;
             } else if (direction == 4) {
                 for (int i = bottom; i >= top ; --i) {
-                    list.add(matrix[i][left]);
+                    matrix[i][left] = counter++;
                 }
                 ++left;
                 direction = 1;
             }
         }
-        return list;
+        return matrix;
     }
     public static void main(String[] args) {
-        int[][] mat = {{1,2,3},
-                {4,5,6},
-                {7,8,9}};
-        System.out.println(spiralOrder(mat));
+        int[][] mat = generateMatrix(6);
+        for (int[] x : mat) {
+            for (int y : x) {
+                System.out.print(y);
+            }
+            System.out.println();
+        }
     }
 }
