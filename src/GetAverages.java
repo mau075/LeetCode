@@ -14,12 +14,14 @@ class GetAverages {
             }
             return result;
         }else {
+            //Variables
             int[] result = new int[nums.length];
             int dividend = (k*2)+1;
             BigInteger avg = BigInteger.ZERO;
             int mid = k;
             int first = -1;
             int last = k*2;
+            //Iterate first subarray
             for(int i=0; i < dividend; i++){
                 avg = avg.add(BigInteger.valueOf(nums[i]));
                 //System.out.print(nums[i] + " ");
@@ -27,6 +29,7 @@ class GetAverages {
             BigInteger r = avg.divide(BigInteger.valueOf(dividend));
             result[k] = r.intValue();
             //result[k] = avg.intValue()/dividend;
+            //Iterate through the rest removing the first and adding the last element
             for(int i=0; i<nums.length; i++){
                 if(i-k < 0 || i+k > nums.length - 1)
                     result[i] = -1;
@@ -43,16 +46,6 @@ class GetAverages {
                         BigInteger s = avg.divide(BigInteger.valueOf(dividend));
                         result[i] = s.intValue();
                     }
-                    /*Integer[] subarray = IntStream.range(i-k, (i-k)+(k*2) + 1)
-                                .mapToObj(j -> nums[j])
-                                .toArray(Integer[]::new);
-                                System.out.println(Arrays.toString(subarray));*/
-
-                    //result[i] = Arrays.stream(subarray).average().getAsInteger();
-
-                    //System.out.println();
-                    //avg /= ((k*2)+1);
-                    //result[i] = avg;
                 }
             }
             return result;
